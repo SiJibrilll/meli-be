@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
@@ -15,15 +16,25 @@ class AuthController extends Controller
             'password' => 'required|string|min:8|confirmed',
         ]);
 
+        /** @var \App\Models\User $user */
+        $user = DB::transaction(function () use ($request) {
+            $user = User::create([ // create a new user
+                'username' => $request->username,
+                'email' => $request->email,
+                'password' => bcrypt($request->password),
+            ]);
         
-        $user = User::create([
-            'username' => $request->username,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-        ]);
+            $user->details()->create(); // create a new user detail record
 
+            return $user;
+        });
+        
+
+        // Create a token for the user
+        // The token is used for authentication in API requests
         $token = $user->createToken($user->username)->plainTextToken;
 
+        // Return a JSON response with the user data and token
         return response()->json([
             'message' => 'User registered successfully',
             'user' => $user,
@@ -45,7 +56,7 @@ class AuthController extends Controller
 
         $user = Auth::user();
         $token = $user->createToken($user->username)->plainTextToken;
-        
+
         return response()->json([
             'message' => 'User logged in successfully',
             'user' => $user,
