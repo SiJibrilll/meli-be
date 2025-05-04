@@ -43,20 +43,27 @@ class AuthController extends Controller
     }
 
     function login(Request $request) {
-        $request->validate([
+        // Validate the request data
+        // Ensure the email and password fields are present and valid
+        $request->validate([ 
             'email' => 'required|string|email',
             'password' => 'required|string',
         ]);
 
+        // Attempt to authenticate the user using the provided email and password
+        // If authentication fails, return a 401 Unauthorized response
         if (!Auth::attempt($request->only('email', 'password'))) {
             return response()->json([
                 'message' => 'Invalid credentials',
             ], 401);
         }
 
+        // If authentication is successful, retrieve the authenticated user
+        // Create a new token for the user
         $user = Auth::user();
         $token = $user->createToken($user->username)->plainTextToken;
 
+        // Return a JSON response with the user data and token
         return response()->json([
             'message' => 'User logged in successfully',
             'user' => $user,
