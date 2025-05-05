@@ -13,6 +13,7 @@ class UserDetail extends Model
         'phone',
         'gender',
         'bio',
+        'image_id'
     ];
 
     protected $primaryKey = 'user_id'; // Tell Laravel what the PK is
@@ -21,5 +22,9 @@ class UserDetail extends Model
 
     function user() {
         return $this->belongsTo(User::class);
+    }
+
+    function image() {
+        return $this->belongsTo(Image::class);
     }
 }
