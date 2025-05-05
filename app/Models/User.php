@@ -69,4 +69,8 @@ class User extends Authenticatable
     function verifies() {
         return $this->belongsToMany(Article::class, 'article_verification', 'user_id', 'article_id');
     }
+
+    function likes() {
+        return $this->belongsToMany(Article::class, 'likes', 'user_id', 'article_id');
+    }
 }

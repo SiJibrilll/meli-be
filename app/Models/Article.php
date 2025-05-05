@@ -33,4 +33,8 @@ class Article extends Model
     function verified_by() {
         return $this->belongsToMany(User::class, 'article_verification', 'article_id', 'user_id');
     }
+
+    function liked_by() {
+        return $this->belongsToMany(User::class, 'likes', 'article_id', 'user_id');
+    }
 }
