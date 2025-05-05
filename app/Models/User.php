@@ -50,4 +50,14 @@ class User extends Authenticatable
     function details() {
         return $this->hasOne(UserDetail::class);
     }
+
+    function following() {
+        return $this->belongsToMany(User::class, 'follows', 'follower_id', 'followed_id')
+            ->withPivot('followed_at');
+    }
+
+    function followers() {
+        return $this->belongsToMany(User::class, 'follows', 'followed_id', 'follower_id')
+            ->withPivot('followed_at');
+    }
 }
