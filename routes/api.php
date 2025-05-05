@@ -46,4 +46,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     //verify article by doctor role
     Route::post('/articles/{id}/verifies', [ArticleVerificationController::class, 'verify'])->middleware('role:doctor');
+
+    //unverify article by doctor role
+    Route::delete('/articles/{id}/verifies', [ArticleVerificationController::class, 'unverify'])->middleware('role:doctor');
 });

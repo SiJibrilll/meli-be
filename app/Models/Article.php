@@ -29,4 +29,8 @@ class Article extends Model
     // {
     //     return $this->hasMany(Like::class);
     // }
+
+    function verified_by() {
+        return $this->belongsToMany(User::class, 'article_verification', 'article_id', 'user_id');
+    }
 }

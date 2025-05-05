@@ -65,4 +65,8 @@ class User extends Authenticatable
     function articles() {
         return $this->hasMany(Article::class);
     }
+
+    function verifies() {
+        return $this->belongsToMany(Article::class, 'article_verification', 'user_id', 'article_id');
+    }
 }

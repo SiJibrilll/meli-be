@@ -38,6 +38,14 @@ class ArticleController extends Controller
             'image' => $article->image->image ?? null
         ]);
 
+        $verified_by = $article->verified_by->map(function ($user) {
+            return [
+                'id' => $user->id,
+                'username' => $user->username,
+                'image' => $user->details->image->image ?? null,
+            ];
+        });
+
         return response()->json([
             'article' => $response,
             'author' => [
@@ -45,7 +53,7 @@ class ArticleController extends Controller
                 'username' => $article->user->username,
                 'image' => $article->user->details->image->image ?? null,
             ],
-            "verivied_by" => [], //TODO add verified by
+            "verivied_by" => $verified_by, 
             "discussions" => [], //TODO add discussions
         ], 200);
     }
@@ -103,8 +111,8 @@ class ArticleController extends Controller
                 'username' => $user->username,
                 'image' => $user->details->image->image ?? null,
             ],
-            "verivied_by" => [], //TODO add verified by
-            "discussions" => [], //TODO add discussions
+            "verivied_by" => [], 
+            "discussions" => [], 
         ], 201);
         
     }
@@ -141,6 +149,14 @@ class ArticleController extends Controller
             'image' => $article->image->image ?? null
         ]);
 
+        $verified_by = $article->verified_by->map(function ($user) {
+            return [
+                'id' => $user->id,
+                'username' => $user->username,
+                'image' => $user->details->image->image ?? null,
+            ];
+        });
+
         return response()->json([
             'message' => 'Article updated successfully',
             'article' => $response,
@@ -149,7 +165,7 @@ class ArticleController extends Controller
                 'username' => $user->username,
                 'image' => $user->details->image->image ?? null,
             ],
-            "verivied_by" => [], //TODO add verified by
+            "verivied_by" => $verified_by, 
             "discussions" => [], //TODO add discussions
         ], 201);
         
