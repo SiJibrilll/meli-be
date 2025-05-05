@@ -6,5 +6,27 @@ use Illuminate\Database\Eloquent\Model;
 
 class Article extends Model
 {
-    //
+    protected $fillable = [
+        'user_id',
+        'title',
+        'content',
+        'image_id',
+        'created_at',
+        'updated_at'
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function image()
+    {
+        return $this->belongsTo(Image::class);
+    }
+
+    // public function likes()
+    // {
+    //     return $this->hasMany(Like::class);
+    // }
 }

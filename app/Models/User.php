@@ -60,4 +60,8 @@ class User extends Authenticatable
         return $this->belongsToMany(User::class, 'follows', 'followed_id', 'follower_id')
             ->withPivot('followed_at');
     }
+
+    function articles() {
+        return $this->hasMany(Article::class);
+    }
 }
