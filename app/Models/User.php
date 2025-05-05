@@ -73,4 +73,8 @@ class User extends Authenticatable
     function likes() {
         return $this->belongsToMany(Article::class, 'likes', 'user_id', 'article_id');
     }
+
+    function communities() {
+        return $this->belongsToMany(Community::class, 'communities_users', 'user_id', 'community_id');
+    }
 }
