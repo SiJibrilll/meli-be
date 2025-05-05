@@ -58,7 +58,7 @@ class ArticleController extends Controller
             ], 404);
         }
         $articles = $users->articles;
-        
+
         // map article data
         $articles = $articles->map(function ($article) {
             return [

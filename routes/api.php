@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArticleVerificationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -42,4 +43,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     //delete article 
     Route::delete('/articles/{id}', [\App\Http\Controllers\ArticleController::class, 'delete']);
+
+    //verify article by doctor role
+    Route::post('/articles/{id}/verifies', [ArticleVerificationController::class, 'verify'])->middleware('role:doctor');
 });
