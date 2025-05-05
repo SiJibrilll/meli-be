@@ -15,6 +15,10 @@ class UserDetail extends Model
         'bio',
     ];
 
+    protected $primaryKey = 'user_id'; // Tell Laravel what the PK is
+    public $incrementing = false;      // It's not auto-incrementing
+    protected $keyType = 'int';        // Use 'string' if you're using UUIDs
+
     function user() {
         return $this->belongsTo(User::class);
     }
