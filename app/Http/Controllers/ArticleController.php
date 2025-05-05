@@ -34,7 +34,7 @@ class ArticleController extends Controller
             ], 404);
         }
 
-        $response = collect($article->toArray())->only(['id', 'title', 'content'])->merge([
+        $response = collect($article->toArray())->only(['id', 'title', 'content', 'like_count'])->merge([
             'image' => $article->image->image ?? null
         ]);
 

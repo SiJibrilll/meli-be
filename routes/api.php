@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ArticleVerificationController;
+use App\Http\Controllers\LikeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -49,4 +50,10 @@ Route::middleware('auth:sanctum')->group(function () {
 
     //unverify article by doctor role
     Route::delete('/articles/{id}/verifies', [ArticleVerificationController::class, 'unverify'])->middleware('role:doctor');
+
+    //like article
+    Route::post('/articles/{id}/likes', [LikeController::class, 'like']);
+
+    //unlike article
+    Route::delete('/articles/{id}/likes', [LikeController::class, 'unlike']);
 });
