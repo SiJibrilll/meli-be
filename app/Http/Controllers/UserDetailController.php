@@ -2,11 +2,43 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class UserDetailController extends Controller
 {
+
+    function get(Request $request, $id) {
+
+        $user = QueryBuilder::for(User::class)
+            ->allowedIncludes('details')
+            ->where('id', $id)
+            ->first();
+            
+        // Check if the user details exist
+        if (!$user) {
+            return response()->json([
+                'message' => 'User not found',
+            ], 404);
+        }
+
+        $details = $user->details;
+        // Return a JSON response with the user data
+        return response()->json([
+            'userDetails' => [
+                'id' => $user->id,
+                'username' => $user->username,
+                'birthDate' => $details->birthDate,
+                'address' => $details->address,
+                'phone' => $details->phone,
+                'bio' => $details->bio,
+                'image' => $details->image,
+            ],
+        ], 200);
+    }
+
     function update(Request $request) {
         $request->validate([
             'birthDate' => 'nullable|date',
