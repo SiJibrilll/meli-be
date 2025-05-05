@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Contracts\Validation\Rule;
 
 class AuthController extends Controller
 {
@@ -14,6 +15,7 @@ class AuthController extends Controller
             'username' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
+            'role' => ['required', 'string', 'in:doctor,user',], // added role validation
         ]);
 
         /** @var \App\Models\User $user */
@@ -26,6 +28,8 @@ class AuthController extends Controller
         
             $user->details()->create(); // create a new user detail record
 
+            $user->assignRole($request->role); // assign the role to the user
+
             return $user;
         });
         
@@ -33,6 +37,8 @@ class AuthController extends Controller
         // Create a token for the user
         // The token is used for authentication in API requests
         $token = $user->createToken($user->username)->plainTextToken;
+
+        $user->role = $request->role; // add the role to the user object
 
         // Return a JSON response with the user data and token
         return response()->json([
@@ -61,12 +67,15 @@ class AuthController extends Controller
         // If authentication is successful, retrieve the authenticated user
         // Create a new token for the user
         $user = Auth::user();
+        $response = collect($user->toArray())->only(['id', 'username', 'email', 'created_at', 'updated_at'])->merge([
+            'role' => $user->getRoleNames()->first(), // get the user's role
+        ]);
         $token = $user->createToken($user->username)->plainTextToken;
 
         // Return a JSON response with the user data and token
         return response()->json([
             'message' => 'User logged in successfully',
-            'user' => $user,
+            'user' => $response,
             'token' => $token,
         ], 200);
         
