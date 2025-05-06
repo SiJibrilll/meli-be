@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('threads', function (Blueprint $table) {
+        Schema::create('repost_thread', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('community_id')->nullable()->constrained('communities')->onDelete('cascade');
-            $table->string('content');
-            $table->integer('likes_count')->default(0);
-            $table->foreignId('image_id')->nullable()->constrained('images')->onDelete('cascade');
+            $table->foreignId('thread_id')->constrained('threads')->onDelete('cascade');
+            $table->string('content')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('threads');
+        Schema::dropIfExists('repost_thread');
     }
 };

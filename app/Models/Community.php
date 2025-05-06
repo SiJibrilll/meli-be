@@ -24,6 +24,11 @@ class Community extends Model
         return $this->belongsToMany(User::class, 'communities_users');
     }
 
+    public function threads()
+    {
+        return $this->hasMany(Thread::class);
+    }
+
     public function image()
     {
         return $this->belongsTo(Image::class);

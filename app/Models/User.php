@@ -66,12 +66,20 @@ class User extends Authenticatable
         return $this->hasMany(Article::class);
     }
 
+    function threads() {
+        return $this->hasMany(Thread::class);
+    }
+
     function verifies() {
         return $this->belongsToMany(Article::class, 'article_verification', 'user_id', 'article_id');
     }
 
-    function likes() {
+    function likedArticles() { //TODO dulunya likes, check this part if this name change caused trouble
         return $this->belongsToMany(Article::class, 'likes', 'user_id', 'article_id');
+    }
+
+    function likedThreads() {
+        return $this->belongsToMany(Thread::class, 'likes', 'user_id', 'thread_id');
     }
 
     function communities() {
@@ -80,5 +88,10 @@ class User extends Authenticatable
 
     function ownsCommunity() {
         return $this->hasMany(Community::class, 'user_id');
+    }
+
+    function reposts() {
+        return $this->belongsToMany(Thread::class, 'repost_thread', 'user_id', 'thread_id')
+            ->withPivot('content');
     }
 }
