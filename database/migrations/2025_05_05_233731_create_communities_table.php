@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('communities', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->string('title')->unique();
             $table->string('bio');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('image_id')->constrained('images')->onDelete('cascade');
+            $table->foreignId('image_id')->nullable()->constrained('images')->onDelete('cascade');
             $table->integer('members_count')->default(0);
-            
+
             $table->timestamps();
         });
     }

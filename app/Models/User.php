@@ -77,4 +77,8 @@ class User extends Authenticatable
     function communities() {
         return $this->belongsToMany(Community::class, 'communities_users', 'user_id', 'community_id');
     }
+
+    function ownsCommunity() {
+        return $this->hasMany(Community::class, 'user_id');
+    }
 }

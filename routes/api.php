@@ -14,8 +14,10 @@ Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login']);
 
 //create route group for authenticated users
 Route::middleware('auth:sanctum')->group(function () {
-    // get user details
+    // update user details
     Route::put('/users/{id}', [\App\Http\Controllers\UserDetailController::class, 'update']);
+
+    //get user details
     Route::get('/users/{id}', [\App\Http\Controllers\UserDetailController::class, 'get']);
 
     //follow reccomendations
@@ -44,16 +46,42 @@ Route::middleware('auth:sanctum')->group(function () {
 
     //delete article 
     Route::delete('/articles/{id}', [\App\Http\Controllers\ArticleController::class, 'delete']);
-
-    //verify article by doctor role
-    Route::post('/articles/{id}/verifies', [ArticleVerificationController::class, 'verify'])->middleware('role:doctor');
-
-    //unverify article by doctor role
-    Route::delete('/articles/{id}/verifies', [ArticleVerificationController::class, 'unverify'])->middleware('role:doctor');
-
+    
     //like article
     Route::post('/articles/{id}/likes', [LikeController::class, 'like']);
-
+    
     //unlike article
     Route::delete('/articles/{id}/likes', [LikeController::class, 'unlike']);
+    
+    //get all communities
+    Route::get('/communities', [\App\Http\Controllers\CommunityController::class, 'index']);
+    
+    //get community by id
+    Route::get('/communities/{id}', [\App\Http\Controllers\CommunityController::class, 'get']);
+    
+    //join community
+    Route::post('/communities/{id}/join', [\App\Http\Controllers\CommunityController::class, 'join']);
+
+    //leave community
+    Route::delete('/communities/{id}/leave', [\App\Http\Controllers\CommunityController::class, 'leave']);
+
+    // route group for doctor role
+    Route::middleware('role:doctor')->group(function () {
+        //create community
+        Route::post('/communities', [\App\Http\Controllers\CommunityController::class, 'create']);
+
+        //edit community
+        Route::put('/communities/{id}', [\App\Http\Controllers\CommunityController::class, 'update']);
+
+        //delete community
+        Route::delete('/communities/{id}', [\App\Http\Controllers\CommunityController::class, 'delete']);
+
+       
+
+        //verify article by doctor role
+        Route::post('/articles/{id}/verifies', [ArticleVerificationController::class, 'verify'])->middleware('role:doctor');
+
+        //unverify article by doctor role
+        Route::delete('/articles/{id}/verifies', [ArticleVerificationController::class, 'unverify'])->middleware('role:doctor');        
+    });
 });

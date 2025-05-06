@@ -14,9 +14,14 @@ class Community extends Model
         'members_count',
     ];
 
-    public function users()
+    public function owner()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function members()
+    {
+        return $this->belongsToMany(User::class, 'communities_users');
     }
 
     public function image()
