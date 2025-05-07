@@ -37,4 +37,8 @@ class Article extends Model
     function liked_by() {
         return $this->belongsToMany(User::class, 'likes', 'article_id', 'user_id');
     }
+
+    function discussions() {
+        return $this->belongsToMany(User::class, 'discussion', 'article_id', 'user_id')->withPivot('content');
+    }
 }

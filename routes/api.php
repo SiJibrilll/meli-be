@@ -92,7 +92,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/threads/{id}/likes', [\App\Http\Controllers\LikeController::class, 'unlikeThread']);
 
     //repost thread
-    Route::post('/threads/{id}/reposts', [ThreadRepostController::class, 'repost']);
+    //TODO repost put on hold
+    //Route::post('/threads/{id}/reposts', [ThreadRepostController::class, 'repost']);
 
     //delete repost
     Route::delete('/reposts/{id}', [ThreadRepostController::class, 'delete']);
@@ -110,8 +111,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
         //delete community
         Route::delete('/communities/{id}', [\App\Http\Controllers\CommunityController::class, 'delete']);
-
-       
 
         //verify article by doctor role
         Route::post('/articles/{id}/verifies', [ArticleVerificationController::class, 'verify'])->middleware('role:doctor');

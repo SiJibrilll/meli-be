@@ -94,4 +94,9 @@ class User extends Authenticatable
         return $this->belongsToMany(Thread::class, 'repost_thread', 'user_id', 'thread_id')
             ->withPivot('content');
     }
+
+    function discussions() {
+        $this->belongsToMany(Article::class, 'discussion', 'user_id', 'article_id')
+            ->withPivot('content');
+    }
 }
