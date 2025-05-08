@@ -96,10 +96,13 @@ Route::middleware('auth:sanctum')->group(function () {
     //Route::post('/threads/{id}/reposts', [ThreadRepostController::class, 'repost']);
 
     //delete repost
-    Route::delete('/reposts/{id}', [ThreadRepostController::class, 'delete']);
+    //Route::delete('/reposts/{id}', [ThreadRepostController::class, 'delete']);
 
     //update repost
-    Route::put('/reposts/{id}', [ThreadRepostController::class, 'update']);
+    //Route::put('/reposts/{id}', [ThreadRepostController::class, 'update']);
+
+    //create discussion
+    Route::post('/articles/{id}/discussions', [\App\Http\Controllers\DiscussionController::class, 'create']);
 
     //===================  route group for doctor role
     Route::middleware('role:doctor')->group(function () {

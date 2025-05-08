@@ -96,7 +96,7 @@ class User extends Authenticatable
     }
 
     function discussions() {
-        $this->belongsToMany(Article::class, 'discussion', 'user_id', 'article_id')
+        return $this->belongsToMany(Article::class, 'discussions', 'user_id', 'article_id')
             ->withPivot('content');
     }
 }
