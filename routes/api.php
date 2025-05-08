@@ -113,6 +113,9 @@ Route::middleware('auth:sanctum')->group(function () {
     //get discussion data
     Route::get('/discussions/{id}', [\App\Http\Controllers\DiscussionController::class, 'get']);
 
+    //create comment
+    Route::post('/threads/{id}/comments', [\App\Http\Controllers\CommentController::class, 'create']);
+
 
     //===================  route group for doctor role
     Route::middleware('role:doctor')->group(function () {
