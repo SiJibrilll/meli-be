@@ -125,6 +125,9 @@ Route::middleware('auth:sanctum')->group(function () {
     //delete comment
     Route::delete('/comments/{id}', [\App\Http\Controllers\CommentController::class, 'delete']);
 
+    //store image
+    Route::post('/images', [\App\Http\Controllers\ImageController::class, 'create']);
+
     //===================  route group for doctor role
     Route::middleware('role:doctor')->group(function () {
         //create community

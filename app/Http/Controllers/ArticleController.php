@@ -16,7 +16,7 @@ class ArticleController extends Controller
                 'id' => $article->id,
                 'title' => $article->title,
                 'content' => $article->content,
-                'image' => $article->image->image ?? null,
+                'image' => optional($article->image)->getPath(),
                 'like_count' => $article->like_count
             ];
         });
@@ -35,14 +35,14 @@ class ArticleController extends Controller
         }
 
         $response = collect($article->toArray())->only(['id', 'title', 'content', 'like_count'])->merge([
-            'image' => $article->image->image ?? null
+            'image' => optional($article->image)->getPath()
         ]);
 
         $verified_by = $article->verified_by->map(function ($user) {
             return [
                 'id' => $user->id,
                 'username' => $user->username,
-                'image' => $user->details->image->image ?? null,
+                'image' => optional($user->details->image)->getPath(),
             ];
         });
 
@@ -51,7 +51,7 @@ class ArticleController extends Controller
             'author' => [
                 'id' => $article->user->id,
                 'username' => $article->user->username,
-                'image' => $article->user->details->image->image ?? null,
+                'image' => optional($article->user->details->image)->getPath(),
             ],
             "verivied_by" => $verified_by, 
             "discussions" => [], //TODO add discussions
@@ -73,7 +73,7 @@ class ArticleController extends Controller
                 'id' => $article->id,
                 'title' => $article->title,
                 'content' => $article->content,
-                'image' => $article->image->image ?? null,
+                'image' => optional($article->image)->getPath(),
                 'like_count' => $article->like_count
             ];
         });
@@ -99,7 +99,7 @@ class ArticleController extends Controller
         ]);
 
         $response = collect($article->toArray())->only(['id', 'title', 'content'])->merge([
-            'image' => $article->image->image ?? null
+            'image' => $article->image->getPath() ?? null
         ]);
 
 
@@ -109,7 +109,7 @@ class ArticleController extends Controller
             'author' => [
                 'id' => $user->id,
                 'username' => $user->username,
-                'image' => $user->details->image->image ?? null,
+                'image' => optional($user->details->image)->getPath(),
             ],
             "verivied_by" => [], 
             "discussions" => [], 
@@ -153,7 +153,7 @@ class ArticleController extends Controller
             return [
                 'id' => $user->id,
                 'username' => $user->username,
-                'image' => $user->details->image->image ?? null,
+                'image' => optional($user->details->image)->getPath(),
             ];
         });
 
@@ -163,7 +163,7 @@ class ArticleController extends Controller
             'author' => [
                 'id' => $user->id,
                 'username' => $user->username,
-                'image' => $user->details->image->image ?? null,
+                'image' => optional($user->details->image)->getPath(),
             ],
             "verivied_by" => $verified_by, 
             "discussions" => [], //TODO add discussions

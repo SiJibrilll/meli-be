@@ -32,7 +32,7 @@ class ArticleVerificationController extends Controller
             return [
                 'id' => $user->id,
                 'username' => $user->username,
-                'image' => $user->details->image->image ?? null,
+                'image' => optional($user->details->image)->getPath() ?? null,
             ];
         });
 
@@ -67,7 +67,7 @@ class ArticleVerificationController extends Controller
             return [
                 'id' => $user->id,
                 'username' => $user->username,
-                'image' => $user->details->image->image ?? null,
+                'image' => optional($user->details->image)->getPath() ?? null,
             ];
         });
 

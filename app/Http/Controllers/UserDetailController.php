@@ -34,7 +34,7 @@ class UserDetailController extends Controller
                 'address' => $details->address,
                 'phone' => $details->phone,
                 'bio' => $details->bio,
-                'image' => $details->image,
+                'image' => $details->image->getPath(),
             ],
         ], 200);
     }
@@ -80,7 +80,7 @@ class UserDetailController extends Controller
                 'phone' => $details->phone,
                 'gender' => $details->gender,
                 'bio' => $details->bio,
-                'image' => $details->image,
+                'image' => $details->image->getPath(),
             ],
             
         ], 200);

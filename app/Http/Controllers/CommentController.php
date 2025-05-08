@@ -25,7 +25,7 @@ class CommentController extends Controller
             'author' => [
                 'id' => $author->id,
                 'username' => $author->username,
-                'image' => $author->details->image->image ?? null,
+                'image' => optional($author->details->image)->getPath() ?? null,
             ],
             'replies' => $comment->comments->map(function ($reply) {
                 return collect($reply->toArray())->only(['id', 'content', 'thread_id', 'parent_id', 'reply_count'])->merge([
