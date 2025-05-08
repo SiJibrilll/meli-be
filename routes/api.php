@@ -110,6 +110,9 @@ Route::middleware('auth:sanctum')->group(function () {
     //delete discussion
     Route::delete('/discussions/{id}', [\App\Http\Controllers\DiscussionController::class, 'delete']);
 
+    //get discussion data
+    Route::get('/discussions/{id}', [\App\Http\Controllers\DiscussionController::class, 'get']);
+
 
     //===================  route group for doctor role
     Route::middleware('role:doctor')->group(function () {

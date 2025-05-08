@@ -4,10 +4,38 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Models\Discussion;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DiscussionController extends Controller
 {
+    public function get($id) {
+        $discussion = Discussion::find($id);
+
+        if (!$discussion) {
+            return response()->json([
+                'message' => 'Discussion not found',
+            ], 404);
+        }
+
+        $author = User::find($discussion->user_id);
+
+
+        // formulate response
+        $response = collect($discussion->toArray())->only(['id', 'content', 'article_id'])->merge([
+            'author' => [
+                'id' => $author->id,
+                'username' => $author->username,
+                'image' => $author->details->image->image ?? null,
+            ]
+        ]);
+
+        return response()->json([
+            'discussion' => $response,
+        ], 200);
+
+    }
+
     function create(Request $request, $id) {
         // verify content
         $request->validate([
