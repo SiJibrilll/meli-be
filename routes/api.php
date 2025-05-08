@@ -28,10 +28,10 @@ Route::middleware('auth:sanctum')->group(function () {
     //get user follows
     Route::get('/users/{id}/follows', [\App\Http\Controllers\FollowController::class, 'follows']);
 
-    //follow user  
+    //follow user
     Route::post('/users/{id}/follows', [\App\Http\Controllers\FollowController::class, 'follow']);
 
-    //get all articles  
+    //get all articles
     Route::get('/articles', [\App\Http\Controllers\ArticleController::class, 'index']);
 
     //get article by id
@@ -46,24 +46,24 @@ Route::middleware('auth:sanctum')->group(function () {
     //edit article
     Route::put('/articles/{id}', [\App\Http\Controllers\ArticleController::class, 'update']);
 
-    //delete article 
+    //delete article
     Route::delete('/articles/{id}', [\App\Http\Controllers\ArticleController::class, 'delete']);
-    
+
     //like article
     Route::post('/articles/{id}/likes', [LikeController::class, 'likeArticle']);
-    
+
     //unlike article
     Route::delete('/articles/{id}/likes', [LikeController::class, 'unlikeArticle']);
-    
+
     //get all communities
     Route::get('/communities', [\App\Http\Controllers\CommunityController::class, 'index']);
-    
+
     //get community by id
     Route::get('/communities/{id}', [\App\Http\Controllers\CommunityController::class, 'get']);
 
     //get threads by community id
     Route::get('/communities/{id}/threads', [ThreadController::class, 'communities_threads']);
-    
+
     //join community
     Route::post('/communities/{id}/join', [\App\Http\Controllers\CommunityController::class, 'join']);
 
@@ -104,6 +104,13 @@ Route::middleware('auth:sanctum')->group(function () {
     //create discussion
     Route::post('/articles/{id}/discussions', [\App\Http\Controllers\DiscussionController::class, 'create']);
 
+    //update discussion
+    Route::put('/discussions/{id}', [\App\Http\Controllers\DiscussionController::class, 'edit']);
+
+    //delete discussion
+    Route::delete('/discussions/{id}', [\App\Http\Controllers\DiscussionController::class, 'delete']);
+
+
     //===================  route group for doctor role
     Route::middleware('role:doctor')->group(function () {
         //create community
@@ -119,6 +126,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/articles/{id}/verifies', [ArticleVerificationController::class, 'verify'])->middleware('role:doctor');
 
         //unverify article by doctor role
-        Route::delete('/articles/{id}/verifies', [ArticleVerificationController::class, 'unverify'])->middleware('role:doctor');        
+        Route::delete('/articles/{id}/verifies', [ArticleVerificationController::class, 'unverify'])->middleware('role:doctor');
     });
 });
