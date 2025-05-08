@@ -43,13 +43,13 @@ class ThreadController extends Controller
             'thread' => [
                 'id' => $thread->id,
                 'content' => $thread->content,
-                'image' => $thread->image->image ?? null,
+                'image' => optional($thread->image)->getPath() ?? null,
                 'community_id' => $request->community_id,
                 'likes_count' => $thread->likes_count,
                 'author' => [
                     'id' => $user->id,
                     'username' => $user->username,
-                    'image' => $user->details->image->image ?? null,
+                    'image' => optional($user->details->image)->getPath() ?? null,
                 ],
             ],
         ], 201);
@@ -82,13 +82,13 @@ class ThreadController extends Controller
             'thread' => [
                 'id' => $thread->id,
                 'content' => $thread->content,
-                'image' => $thread->image->image ?? null,
+                'image' => optional($thread->image)->getPath() ?? null,
                 'community_id' => $thread->community_id,
                 'likes_count' => $thread->likes_count,
                 'author' => [
                     'id' => $user->id,
                     'username' => $user->username,
-                    'image' => $user->details->image->image ?? null,
+                    'image' => optional($user->details->image)->getPath() ?? null,
                 ],
             ],
         ], 200);
@@ -115,12 +115,12 @@ class ThreadController extends Controller
             return [
                 'id' => $thread->id,
                 'content' => $thread->content,
-                'image' => $thread->image->image ?? null,
+                'image' => optional($thread->image)->getPath() ?? null,
                 'likes_count' => $thread->likes_count,
                 'author' => [
                     'id' => $thread->user_id,
                     'username' => $thread->author->username,
-                    'image' => $thread->author->details->image->image ?? null,
+                    'image' => optional($thread->author->details->image)->getPath() ?? null,
                 ],
             ];
         });
@@ -140,13 +140,13 @@ class ThreadController extends Controller
             'thread' => [
                 'id' => $thread->id,
                 'content' => $thread->content,
-                'image' => $thread->image->image ?? null,
+                'image' => optional($thread->image)->getPath() ?? null,
                 'likes_count' => $thread->likes_count,
             ],
             'author' => [
                 'id' => $thread->user_id,
                 'username' => $thread->author->username,
-                'image' => $thread->author->details->image->image ?? null,
+                'image' => optional($thread->author->details->image)->getPath() ?? null,
             ],
             'comments' => [] //TODO add comments
         ];
@@ -167,12 +167,12 @@ class ThreadController extends Controller
             return [
                 'id' => $thread->id,
                 'content' => $thread->content,
-                'image' => $thread->image->image ?? null,
+                'image' => optional($thread->image)->getPath() ?? null,
                 'likes_count' => $thread->likes_count,
                 'author' => [
                     'id' => $thread->user_id,
                     'username' => $thread->author->username,
-                    'image' => $thread->author->details->image->image ?? null,
+                    'image' => optional($thread->author->details->image)->getPath() ?? null,
                 ],
             ];
         });

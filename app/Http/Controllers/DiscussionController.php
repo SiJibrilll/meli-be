@@ -26,7 +26,7 @@ class DiscussionController extends Controller
             'author' => [
                 'id' => $author->id,
                 'username' => $author->username,
-                'image' => $author->details->image->image ?? null,
+                'image' => optional($author->details->image)->getPath() ?? null,
             ]
         ]);
 
@@ -62,7 +62,7 @@ class DiscussionController extends Controller
             'author' => [
                 'id' => $user->id,
                 'username' => $user->username,
-                'image' => $user->details->image->image ?? null,
+                'image' => optional($user->details->image)->getPath() ?? null,
             ]
         ]);
 
@@ -103,7 +103,7 @@ class DiscussionController extends Controller
             'author' => [
                 'id' => $user->id,
                 'username' => $user->username,
-                'image' => $user->details->image->image ?? null,
+                'image' => optional($user->details->image)->getPath() ?? null,
             ]
         ]);
 

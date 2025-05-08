@@ -32,7 +32,7 @@ class CommentController extends Controller
                     'author' => [
                         'id' => $reply->user->id,
                         'username' => $reply->user->username,
-                        'image' => $reply->user->details->image->image ?? null,
+                        'image' => optional($reply->user->details->image)->getPath() ?? null,
                     ],
                 ]);
             }),
@@ -78,7 +78,7 @@ class CommentController extends Controller
             'author' => [
                 'id' => $user->id,
                 'username' => $user->username,
-                'image' => $user->details->image->image ?? null,
+                'image' => optional($user->details->image)->getPath() ?? null,
             ],
             'replies' => []
         ]);
@@ -116,14 +116,14 @@ class CommentController extends Controller
             'author' => [
                 'id' => $user->id,
                 'username' => $user->username,
-                'image' => $user->details->image->image ?? null,
+                'image' => optional($user->details->image)->getPath() ?? null,
             ],
             'replies' => $comment->comments->map(function ($reply) {
                 return collect($reply->toArray())->only(['id', 'content', 'thread_id', 'parent_id', 'reply_count'])->merge([
                     'author' => [
                         'id' => $reply->user->id,
                         'username' => $reply->user->username,
-                        'image' => $reply->user->details->image->image ?? null,
+                        'image' => optional($reply->user->details->image)->getPath() ?? null,
                     ],
                 ]);
             }),

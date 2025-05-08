@@ -16,7 +16,7 @@ class FollowController extends Controller
         $users = $user->map(function ($user) {
             return [
                 'username' => $user->username,
-                'image' => $user->details->image->image ?? null,
+                'image' => optional($user->details->image)->getPath() ?? null,
                 'id' => $user->id
             ];
         });
@@ -37,7 +37,7 @@ class FollowController extends Controller
         $follows = $user->following->map(function ($follows) {
             return [
                 'username' => $follows->username,
-                'image' => $follows->details->image->image ?? null,
+                'image' => optional($follows->details->image)->getPath() ?? null,
                 'id' => $follows->id
             ];
         });
@@ -46,7 +46,7 @@ class FollowController extends Controller
         $follwers = $user->followers->map(function ($follower) {
             return [
                 'username' => $follower->username,
-                'image' => $follower->details->image->image ?? null,
+                'image' => optional($follower->details->image)->getPath() ?? null,
                 'id' => $follower->id
             ];
         });;
@@ -77,7 +77,7 @@ class FollowController extends Controller
         $response = collect($user->toArray())
             ->only(['id', 'username'])
             ->merge([
-                'image' => $user->details->image->image ?? null,
+                'image' => optional($user->details->image)->getPath() ?? null,
             ]);
 
         return response()->json([

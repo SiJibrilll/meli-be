@@ -41,11 +41,11 @@ class CommunityController extends Controller
         ]);
 
         $response = $response->merge([
-            'image' => $community->image->image ?? null,
+            'image' => optional($community->image)->getPath() ?? null,
             'owner' => [
                 'id' => $user->id,
                 'username' => $user->username,
-                'image' => $user->details->image->image ?? null,
+                'image' => optional($user->details->image)->getPath() ?? null,
             ],
         ]);
 
@@ -99,11 +99,11 @@ class CommunityController extends Controller
         ]);
 
         $response = $response->merge([
-            'image' => $community->image->image ?? null,
+            'image' => optional($community->image)->getPath() ?? null,
             'owner' => [
                 'id' => $user->id,
                 'username' => $user->username,
-                'image' => $user->details->image->image ?? null,
+                'image' => optional($user->details->image)->getPath() ?? null,
             ],
         ]);
 
@@ -147,7 +147,7 @@ class CommunityController extends Controller
                 'title' => $community->title,
                 'bio' => $community->bio,
                 'members_count' => $community->members_count,
-                'image' => $community->image->image ?? null,
+                'image' => optional($community->image)->getPath() ?? null,
             ];
         });
 
@@ -171,11 +171,11 @@ class CommunityController extends Controller
         ]);
 
         $response = $response->merge([
-            'image' => $community->image->image ?? null,
+            'image' => optional($community->image)->getPath() ?? null,
             'owner' => [
                 'id' => $community->user_id,
                 'username' => $community->owner->username,
-                'image' => $community->owner->details->image->image ?? null,
+                'image' => optional($community->owner->details->image)->getPath() ?? null,
             ],
         ]);
 
