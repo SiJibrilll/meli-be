@@ -116,6 +116,14 @@ Route::middleware('auth:sanctum')->group(function () {
     //create comment
     Route::post('/threads/{id}/comments', [\App\Http\Controllers\CommentController::class, 'create']);
 
+    //get comment by id
+    Route::get('/comments/{id}', [\App\Http\Controllers\CommentController::class, 'get']);
+
+    //edit comment
+    Route::put('/comments/{id}', [\App\Http\Controllers\CommentController::class, 'edit']);
+
+    //delete comment
+    Route::delete('/comments/{id}', [\App\Http\Controllers\CommentController::class, 'delete']);
 
     //===================  route group for doctor role
     Route::middleware('role:doctor')->group(function () {
