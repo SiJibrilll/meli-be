@@ -38,4 +38,8 @@ class Thread extends Model
         return $this->belongsToMany(Thread::class, 'repost_thread', 'thread_id', 'user_id')
             ->withPivot('content');
     }
+
+    function comments() {
+        return $this->hasMany(Comment::class);
+    }
 }

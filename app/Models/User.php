@@ -99,4 +99,8 @@ class User extends Authenticatable
         return $this->belongsToMany(Article::class, 'discussions', 'user_id', 'article_id')
             ->withPivot('content');
     }
+
+    function comments() {
+        return $this->hasMany(Comment::class);
+    }
 }
