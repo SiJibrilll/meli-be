@@ -99,7 +99,7 @@ class ArticleController extends Controller
         ]);
 
         $response = collect($article->toArray())->only(['id', 'title', 'content'])->merge([
-            'image' => $article->image->getPath() ?? null
+            'image' => optional($article->image)->getPath() ?? null
         ]);
 
 
