@@ -13,4 +13,9 @@ class Discussion extends Model
         'article_id',
         'content'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

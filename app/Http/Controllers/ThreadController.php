@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Thread;
 use App\Models\Community;
 use Illuminate\Http\Request;
+use App\Http\Resources\userResource;
 
 class ThreadController extends Controller
 {
@@ -148,7 +150,7 @@ class ThreadController extends Controller
                 'username' => $thread->author->username,
                 'image' => optional($thread->author->details->image)->getPath() ?? null,
             ],
-            'comments' => [] //TODO add comments
+            'comments' => $thread->comments
         ];
 
         return response()->json([
@@ -181,5 +183,24 @@ class ThreadController extends Controller
         ], 200);
     }
 
-    
+    function user_threads($id) {
+        $user = User::find($id);
+        if (!$user) {
+            return response()->json(['message' => 'User not found.'], 404);
+        }
+
+        $threads = $user->threads;
+        $response = $threads->map(function ($thread) {
+            return [
+                'id' => $thread->id,
+                'content' => $thread->content,
+                'image' => optional($thread->image)->getPath() ?? null,
+                'likes_count' => $thread->likes_count,
+                'author' => new userResource($thread->author),
+            ];
+        });
+        return response()->json([
+            'threads' => $response,
+        ], 200);
+    }
 }

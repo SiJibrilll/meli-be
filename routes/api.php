@@ -64,6 +64,9 @@ Route::middleware('auth:sanctum')->group(function () {
     //get threads by community id
     Route::get('/communities/{id}/threads', [ThreadController::class, 'communities_threads']);
 
+    //get user threads
+    Route::get('/users/{id}/threads', [ThreadController::class, 'user_threads']);
+
     //join community
     Route::post('/communities/{id}/join', [\App\Http\Controllers\CommunityController::class, 'join']);
 

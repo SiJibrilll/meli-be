@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use GuzzleHttp\Psr7\Query;
 use Illuminate\Http\Request;
+use App\Http\Resources\userResource;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class FollowController extends Controller
@@ -14,11 +15,7 @@ class FollowController extends Controller
         
         // map user data
         $users = $user->map(function ($user) {
-            return [
-                'username' => $user->username,
-                'image' => optional($user->details->image)->getPath() ?? null,
-                'id' => $user->id
-            ];
+            return new userResource($user);
         });
 
         return response()->json([
@@ -35,11 +32,7 @@ class FollowController extends Controller
         
         // map follows data
         $follows = $user->following->map(function ($follows) {
-            return [
-                'username' => $follows->username,
-                'image' => optional($follows->details->image)->getPath() ?? null,
-                'id' => $follows->id
-            ];
+            return new userResource($follows);
         });
             
         // map followers data
@@ -67,12 +60,15 @@ class FollowController extends Controller
 
         if ($follower->following()->where('followed_id', $user->id)->exists()) {
             $follower->following()->detach($user->id);
+            $user->details->decrement('follower_count');
+
             return response()->json([
                 'message' => 'You are no longer following this user',
             ], 200);
         }
 
         $follower->following()->attach($user->id);
+        $user->details->increment('follower_count');
 
         $response = collect($user->toArray())
             ->only(['id', 'username'])

@@ -35,6 +35,7 @@ class UserDetailController extends Controller
                 'phone' => $details->phone,
                 'bio' => $details->bio,
                 'image' => optional($details->image)->getPath(),
+                'gender' => $details->gender
             ],
         ], 200);
     }

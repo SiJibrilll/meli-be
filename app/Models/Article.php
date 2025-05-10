@@ -39,6 +39,6 @@ class Article extends Model
     }
 
     function discussions() {
-        return $this->belongsToMany(User::class, 'discussions', 'article_id', 'user_id')->withPivot('content');
+        return $this->hasMany(Discussion::class);
     }
 }

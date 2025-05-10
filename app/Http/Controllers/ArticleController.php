@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\discussionResource;
+use App\Http\Resources\userResource;
 use App\Models\Article;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -46,15 +48,15 @@ class ArticleController extends Controller
             ];
         });
 
+        $discussions = $article->discussions->map(function ($discussion) {
+            return new discussionResource($discussion);
+        });
+
         return response()->json([
             'article' => $response,
-            'author' => [
-                'id' => $article->user->id,
-                'username' => $article->user->username,
-                'image' => optional($article->user->details->image)->getPath(),
-            ],
+            'author' => new userResource($article->user),
             "verivied_by" => $verified_by, 
-            "discussions" => [], //TODO add discussions
+            "discussions" => $discussions,
         ], 200);
     }
 
@@ -157,16 +159,16 @@ class ArticleController extends Controller
             ];
         });
 
+        $discussions = $article->discussions->map(function ($discussion) {
+            return new discussionResource($discussion);
+        });
+
         return response()->json([
             'message' => 'Article updated successfully',
             'article' => $response,
-            'author' => [
-                'id' => $user->id,
-                'username' => $user->username,
-                'image' => optional($user->details->image)->getPath(),
-            ],
+            'author' => new userResource($article->user),
             "verivied_by" => $verified_by, 
-            "discussions" => [], //TODO add discussions
+            "discussions" => $discussions,
         ], 201);
         
     }
