@@ -131,6 +131,11 @@ Route::middleware('auth:sanctum')->group(function () {
     //store image
     Route::post('/images', [\App\Http\Controllers\ImageController::class, 'create']);
 
+    // gemini chat
+    Route::post('/gemini/start', [\App\Http\Controllers\GeminiController::class, 'start']);
+    
+    Route::post('/gemini/chat', [\App\Http\Controllers\GeminiController::class, 'chat']);
+
     //===================  route group for doctor role
     Route::middleware('role:doctor')->group(function () {
         //create community
